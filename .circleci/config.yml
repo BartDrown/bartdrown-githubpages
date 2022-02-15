@@ -54,9 +54,10 @@ jobs:
             # Install AWS cli
             - run:
                 name: Deploy to github
-                command:
+                command: |
                     git checkout deploy
-            
+                    git commit -m "chore: update dist to $CIRCLE_SHA1"
+                    git push -u origin deploy
 workflows:
     version: 2
     # The build and deploy workflow

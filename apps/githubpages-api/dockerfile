@@ -1,0 +1,24 @@
+#Development stage - build
+FROM node:16-alpine as development
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+RUN npm run build
+
+#Production stage - includes builded dist
+FROM node:16-alpine as production
+
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
+
+COPY package*.json ./
+RUN npm install --only=production
+
+COPY . .
+COPY --from=development ./dist ./dist
+
+#Entry point
+EXPOSE 80
+CMD ["node", "dist/main"]

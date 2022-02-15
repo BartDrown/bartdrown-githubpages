@@ -1,0 +1,60 @@
+#? Workaround for: 
+# https://gitlab.com/gitlab-org/gitlab/-/issues/222370
+workflow:
+    rules:
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+        - if: $CI_MERGE_REQUEST_IID
+
+variables:
+    SERVICE_NAME: web
+    DEPLOYMENT_NAME: $SERVICE_NAME-$CI_COMMIT_REF_SLUG
+    IMAGE_NAME: $CI_REGISTRY_IMAGE/$SERVICE_NAME
+    CONTAINER_NAME: $CI_PROJECT_PATH_SLUG_$SERVICE_NAME_$CI_COMMIT_REF_SLUG
+    SERVICE_DOMAIN: $DEPLOYMENT_NAME.$FQDN
+
+stages:
+    - build
+    - test
+    - deploy
+    - stop-deploy
+
+build_review:
+    stage: build
+    tags: 
+        - build
+    script:
+       - echo "build" 
+      
+test_review:
+    stage: test
+    tags: 
+        - test
+    script: 
+        - echo "Test stage"
+
+deploy_review:
+    stage: deploy
+    tags: 
+        - deploy
+    script: 
+        - echo "Deploy review app"
+    environment:
+        #? Workaround due to:
+        #  https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1809
+        name: "$CI_COMMIT_REF_SLUG/$SERVICE_NAME"
+        url: "https://$SERVICE_NAME-$CI_COMMIT_REF_SLUG.$FQDN"
+        on_stop: stop_review
+        auto_stop_in: 6 hours
+
+stop_review:
+    stage: stop-deploy
+    tags: 
+        - deploy
+    script:
+        - echo "Stop deployment"
+    environment:
+        #? Workaround due to:
+        #  https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1809
+        name: "$CI_COMMIT_REF_SLUG/$SERVICE_NAME"
+        action: stop
+    when: manual

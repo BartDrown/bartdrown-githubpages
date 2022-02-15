@@ -63,7 +63,9 @@ jobs:
                     git config user.email "bjakubowski.dev@gmail.com"
                     git config user.name "BartDrown"
                     git checkout deploy
-                    git add dist/
+                    mv dist/ ..../bartdrown.github.io/
+                    cd ...
+                    git add .
                     git commit -m "chore: update dist to $CIRCLE_SHA1"
                     git push -u origin deploy
 workflows:

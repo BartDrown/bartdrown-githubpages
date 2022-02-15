@@ -42,7 +42,7 @@ jobs:
 
     # The deploy job
     deploy:
-        working_directory: ~/apps/githubpages-web
+        working_directory: ~/bartdrown-githubpages/apps/githubpages-web
         docker:
             - image: cimg/node:16.14.0-browsers
         steps:

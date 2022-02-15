@@ -1,4 +1,0 @@
-[submodule "apps/githubpages-web/dist"]
-	path = apps/githubpages-web/dist
-	url = git@github.com:BartDrown/bartdrown-githubpages
-	branch = deploy

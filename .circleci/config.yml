@@ -61,6 +61,7 @@ jobs:
                     git config user.name "BartDrown"
                     git checkout deploy
                     git commit -m "chore: update dist to $CIRCLE_SHA1"
+                    git add dist
                     git push -u origin deploy
 workflows:
     version: 2

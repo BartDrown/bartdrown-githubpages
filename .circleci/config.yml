@@ -8,7 +8,8 @@ jobs:
             - image: cimg/node:16.14.0-browsers
         steps:
             # Checkout the code from the branch into the working_directory
-            - checkout
+            - checkout:
+              path: ~bartdrown-githubpages
             # Log the current branch
             - run:
                 name: Show current branch

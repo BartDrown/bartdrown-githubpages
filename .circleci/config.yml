@@ -5,7 +5,7 @@ jobs:
     build:
         working_directory: ~/apps/githubpages-web
         docker:
-            - image: cimg/node:16
+            - image: cimg/node:16.14.0-browsers
         steps:
             # Checkout the code from the branch into the working_directory
             - checkout
@@ -41,7 +41,7 @@ jobs:
     deploy:
         working_directory: ~/apps/githubpages-web
         docker:
-            - image: cimg/node:16
+            - image: cimg/node:16.14.0-browsers
         steps:
             # Log the current branch
             - run:
@@ -71,4 +71,5 @@ workflows:
                 filters:
                     branches:
                         only:
+                        
                             - master

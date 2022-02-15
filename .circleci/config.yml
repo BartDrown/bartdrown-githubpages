@@ -54,12 +54,16 @@ jobs:
             - restore_cache:
                 key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
             # Install AWS cli
+            - add_ssh_keys:
+                fingerprints:
+                    - "38:8f:7c:ce:61:06:15:94:c4:23:a8:dc:7f:16:0b:4e"
             - run:
                 name: Deploy to github
                 command: |
                     git config user.email "bjakubowski.dev@gmail.com"
                     git config user.name "BartDrown"
                     git checkout deploy
+                    git add dist/
                     git commit -m "chore: update dist to $CIRCLE_SHA1"
                     git push -u origin deploy
 workflows:
@@ -68,6 +72,10 @@ workflows:
     build_and_deploy:
         jobs:
             - build
+                filters:
+                        branches:
+                            only:
+                                - master
             # The deploy job will only run on the filtered branches and
             # require the build job to be successful before it starts
             - deploy:
@@ -76,5 +84,4 @@ workflows:
                 filters:
                     branches:
                         only:
-                        
                             - master

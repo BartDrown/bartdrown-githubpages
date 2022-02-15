@@ -30,10 +30,7 @@ jobs:
                     - node_modules
             - run:
                 name: Building
-                command: |                
-                    ls    
-                    pwd
-                    npm run build
+                command: npm run build
             # Cache the dist folder for the deploy job
             - save_cache:
                 key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
@@ -56,9 +53,9 @@ jobs:
                 key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
             # Install AWS cli
             - run:
-                name: Push dist to github
+                name: Deploy to github
                 command:
-                    echo "Push dist to github"
+                    git checkout deploy
             
 workflows:
     version: 2

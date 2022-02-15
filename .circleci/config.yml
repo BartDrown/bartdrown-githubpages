@@ -63,8 +63,7 @@ jobs:
                     git config user.email "bjakubowski.dev@gmail.com"
                     git config user.name "BartDrown"
                     git checkout deploy
-                    ls 
-                    mv apps/githubpages-web/dist/ docs/
+                    mv apps/githubpages-web/dist/githubpages-web/ docs/
                     git add .
                     git commit -m "chore: update dist to $CIRCLE_SHA1"
                     git push -u origin deploy

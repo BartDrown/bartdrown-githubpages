@@ -29,7 +29,8 @@ jobs:
                     - node_modules
             - run:
                 name: Building
-                command: |                    
+                command: |                
+                    ls    
                     npm run build
             # Cache the dist folder for the deploy job
             - save_cache:

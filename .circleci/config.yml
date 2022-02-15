@@ -55,6 +55,7 @@ jobs:
             - run:
                 name: Deploy to github
                 command: |
+                    git submodule update --init --recursive
                     git checkout deploy
                     git commit -m "chore: update dist to $CIRCLE_SHA1"
                     git push -u origin deploy

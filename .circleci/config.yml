@@ -39,7 +39,7 @@ jobs:
 
     # The deploy job
     deploy:
-        working_directory: ~/bartdrown-githubpages/apps/githubpages-web
+        working_directory: ~/bartdrown-githubpages/githubpages-web
         docker:
             - image: cimg/node:16.14.0-browsers
         steps:
@@ -63,8 +63,7 @@ jobs:
                     git config user.email "bjakubowski.dev@gmail.com"
                     git config user.name "BartDrown"
                     git checkout deploy
-                    mv dist/ ../../../../bartdrown.github.io/
-                    cd ...
+                    mv dist/ docs/
                     git add .
                     git commit -m "chore: update dist to $CIRCLE_SHA1"
                     git push -u origin deploy

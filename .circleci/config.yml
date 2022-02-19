@@ -65,6 +65,7 @@ jobs:
                     git checkout deploy
                     rm -rf docs
                     mv apps/githubpages-web/dist/githubpages-web/ docs/
+                    cp docs/index.html docs/404.html
                     git add .
                     git commit -m "chore: update dist to $CIRCLE_SHA1"
                     git push -u origin deploy
